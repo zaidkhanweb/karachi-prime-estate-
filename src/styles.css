@@ -1,0 +1,179 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system — DHA Karachi Real Estate
+ * Ivory paper, deep navy ink, brass accent.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(0.973 0.008 85);
+  --foreground: oklch(0.245 0.028 250);
+  --card: oklch(0.995 0.004 90);
+  --card-foreground: oklch(0.245 0.028 250);
+  --popover: oklch(0.995 0.004 90);
+  --popover-foreground: oklch(0.245 0.028 250);
+  --primary: oklch(0.245 0.028 250);
+  --primary-foreground: oklch(0.98 0.008 85);
+  --secondary: oklch(0.935 0.012 85);
+  --secondary-foreground: oklch(0.245 0.028 250);
+  --muted: oklch(0.94 0.01 85);
+  --muted-foreground: oklch(0.5 0.02 250);
+  --accent: oklch(0.66 0.085 75);
+  --accent-foreground: oklch(0.22 0.028 250);
+  --destructive: oklch(0.55 0.2 27);
+  --destructive-foreground: oklch(0.98 0.008 85);
+  --border: oklch(0.89 0.012 85);
+  --input: oklch(0.89 0.012 85);
+  --ring: oklch(0.66 0.085 75);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+}
+
+@utility eyebrow {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+@utility btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.75rem 1.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  min-height: 44px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+@utility btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  &:hover {
+    background-color: oklch(0.32 0.032 250);
+  }
+}
+
+@utility btn-accent {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+  &:hover {
+    background-color: oklch(0.71 0.085 75);
+  }
+}
+
+@utility btn-outline {
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  color: var(--foreground);
+  &:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+
+@utility field {
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.875rem;
+  color: var(--foreground);
+  min-height: 44px;
+  &:focus {
+    outline: 2px solid var(--ring);
+    outline-offset: 1px;
+  }
+}
+
+@utility label-xs {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted-foreground);
+  font-weight: 600;
+}
+
+@utility rise {
+  animation: riseIn 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
