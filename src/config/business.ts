@@ -1,17 +1,14 @@
 // Central business configuration.
-// Values marked PLACEHOLDER must be replaced with verified client details.
+// Replace temporary contact values with verified client details during final setup.
 export const business = {
   name: "DHA KARACHI Real Estate",
   shortName: "DHA Karachi",
   tagline: "Real Estate",
   logoText: "DK",
   address: "4th Sunset St, D.H.A. Phase 4, Sunset Commercial Area, Karachi, Pakistan",
-  // PLACEHOLDER — replace with the verified business number
   phoneDisplay: "+92 300 000 0000",
   phone: "+923000000000",
-  // PLACEHOLDER — replace with the verified WhatsApp number
   whatsapp: "923000000000",
-  // PLACEHOLDER
   email: "hello@example.com",
   mapsEmbedUrl:
     "https://www.google.com/maps?q=4th%20Sunset%20St%2C%20D.H.A.%20Phase%204%2C%20Sunset%20Commercial%20Area%2C%20Karachi&output=embed",
@@ -20,14 +17,12 @@ export const business = {
     encodeURIComponent(
       "4th Sunset St, D.H.A. Phase 4, Sunset Commercial Area, Karachi, Pakistan",
     ),
-  // PLACEHOLDER — replace with the business's Google reviews link
   googleReviewsUrl: "https://www.google.com/maps/search/?api=1&query=DHA+Karachi+Real+Estate",
   socials: {
-    instagram: "https://instagram.com/", // PLACEHOLDER
-    facebook: "https://facebook.com/", // PLACEHOLDER
-    tiktok: "https://tiktok.com/", // PLACEHOLDER
+    instagram: "https://instagram.com/",
+    facebook: "https://facebook.com/",
+    tiktok: "https://tiktok.com/",
   },
-  // PLACEHOLDER hours
   hours: [
     { day: "Monday – Saturday", time: "10:00 AM – 8:00 PM (placeholder)" },
     { day: "Sunday", time: "By appointment (placeholder)" },
@@ -39,6 +34,19 @@ export const business = {
     "Bahria Town Karachi",
     "PECHS",
   ],
+};
+
+// These checks keep temporary template values out of the visitor-facing UI.
+export const contactReady = {
+  phone: Boolean(business.phone) && !business.phone.includes("000000000"),
+  whatsapp: Boolean(business.whatsapp) && !business.whatsapp.includes("000000000"),
+  email: Boolean(business.email) && !business.email.toLowerCase().endsWith("@example.com"),
+  hours:
+    business.hours.length > 0 &&
+    business.hours.every((h) => !h.time.toLowerCase().includes("placeholder")),
+  instagram: Boolean(business.socials.instagram) && business.socials.instagram !== "https://instagram.com/",
+  facebook: Boolean(business.socials.facebook) && business.socials.facebook !== "https://facebook.com/",
+  tiktok: Boolean(business.socials.tiktok) && business.socials.tiktok !== "https://tiktok.com/",
 };
 
 export const waLink = (message?: string) =>

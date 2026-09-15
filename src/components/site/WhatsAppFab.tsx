@@ -1,7 +1,9 @@
 import { MessageCircle } from "lucide-react";
-import { waLink } from "@/config/business";
+import { contactReady, waLink } from "@/config/business";
 
 export function WhatsAppFab() {
+  if (!contactReady.whatsapp) return null;
+
   return (
     <a
       href={waLink("Hello, I found your website and would like to enquire.")}

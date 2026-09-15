@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { BedDouble, Bath, Ruler, MapPin, Phone, MessageCircle, Check } from "lucide-react";
 import { getProperty } from "@/data/properties";
-import { telLink, waLink } from "@/config/business";
+import { contactReady, telLink, waLink } from "@/config/business";
 import { InquiryForm } from "@/components/site/InquiryForm";
 
 export const Route = createFileRoute("/properties/$propertyId")({
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/properties/$propertyId")({
       };
     }
     const p = loaderData.property;
-    const description = `${p.title} in ${p.location} — sample listing shown for demonstration. ${p.description}`;
+    const description = `${p.title} in ${p.location} — example property presentation. ${p.description}`;
     return {
       meta: [
         { title: `${p.title}, ${p.location} — DHA Karachi Real Estate` },
@@ -199,12 +199,16 @@ function PropertyDetail() {
               Speak to an agent about this or similar properties in {property.location}.
             </p>
             <div className="mt-5 flex flex-col gap-2">
-              <a href={waLink(waMessage)} className="btn-base btn-accent">
-                <MessageCircle className="size-4" aria-hidden="true" /> WhatsApp Agent
-              </a>
-              <a href={telLink} className="btn-base btn-primary">
-                <Phone className="size-4" aria-hidden="true" /> Call Agent
-              </a>
+              {contactReady.whatsapp && (
+                <a href={waLink(waMessage)} className="btn-base btn-accent">
+                  <MessageCircle className="size-4" aria-hidden="true" /> WhatsApp Agent
+                </a>
+              )}
+              {contactReady.phone && (
+                <a href={telLink} className="btn-base btn-primary">
+                  <Phone className="size-4" aria-hidden="true" /> Call Agent
+                </a>
+              )}
               <a href="#viewing" className="btn-base btn-outline">
                 Request a Viewing
               </a>

@@ -19,7 +19,7 @@ import {
   matchesFilter,
   type FilterId,
 } from "@/components/site/PropertyFilters";
-import { business, telLink, waLink } from "@/config/business";
+import { business, contactReady, telLink, waLink } from "@/config/business";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Trusted real estate guidance for buying, selling and investing in Karachi's most sought-after locations.",
+          "Browse property options across DHA, Clifton and other key Karachi neighbourhoods for buying, renting and investment.",
       },
       { property: "og:url", content: "/" },
     ],
@@ -45,33 +45,33 @@ export const Route = createFileRoute("/")({
 const whyUs = [
   {
     icon: MapPinned,
-    title: "Local Market Knowledge",
-    body: "Street-level familiarity with DHA, Clifton and the surrounding Karachi belt.",
+    title: "Karachi Area Search",
+    body: "Compare property examples across DHA, Clifton and other featured Karachi locations.",
   },
   {
     icon: Compass,
-    title: "Personalised Guidance",
-    body: "Advice shaped around your budget, timeline and reason for moving.",
+    title: "Search Around Your Needs",
+    body: "Narrow options by purpose, property type, location, budget and bedrooms.",
   },
   {
     icon: Eye,
-    title: "Transparent Communication",
-    body: "Clear pricing conversations, honest trade-offs and no pressure.",
+    title: "Clear Property Details",
+    body: "Keep the important listing information, features and next steps easy to review.",
   },
   {
     icon: Handshake,
-    title: "End-to-End Assistance",
-    body: "From the first viewing through documentation and handover.",
+    title: "Viewing Enquiries",
+    body: "Move from a property page to a viewing or contact enquiry without losing context.",
   },
   {
     icon: Users,
-    title: "Buyer & Seller Support",
-    body: "One point of contact whichever side of the deal you are on.",
+    title: "Buy, Sell & Rent",
+    body: "The website supports enquiries from buyers, sellers, landlords and tenants.",
   },
   {
     icon: ShieldCheck,
-    title: "Careful Verification",
-    body: "We walk through paperwork with you before anything is committed.",
+    title: "Residential & Commercial",
+    body: "Present houses, apartments, plots and commercial spaces in one clear property flow.",
   },
 ];
 
@@ -123,25 +123,29 @@ function HomePage() {
                 Find the Right Property in Karachi
               </h1>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-primary-foreground/80">
-                Trusted real estate guidance for buying, selling and investing in
-                Karachi's most sought-after locations.
+                Browse property options across DHA, Clifton and other key Karachi neighbourhoods,
+                whether you're looking to buy, rent or invest.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link to="/properties" className="btn-base btn-accent">
                   Explore Properties
                 </Link>
-                <a
-                  href={waLink("Hello, I'd like to speak to an agent about a property.")}
-                  className="btn-base border border-primary-foreground/30 text-primary-foreground hover:border-accent hover:text-accent"
-                >
-                  <MessageCircle className="size-4" aria-hidden="true" /> WhatsApp Us
-                </a>
-                <a
-                  href={telLink}
-                  className="btn-base border border-primary-foreground/30 text-primary-foreground hover:border-accent hover:text-accent"
-                >
-                  <Phone className="size-4" aria-hidden="true" /> Call Now
-                </a>
+                {contactReady.whatsapp && (
+                  <a
+                    href={waLink("Hello, I'd like to speak to an agent about a property.")}
+                    className="btn-base border border-primary-foreground/30 text-primary-foreground hover:border-accent hover:text-accent"
+                  >
+                    <MessageCircle className="size-4" aria-hidden="true" /> WhatsApp Us
+                  </a>
+                )}
+                {contactReady.phone && (
+                  <a
+                    href={telLink}
+                    className="btn-base border border-primary-foreground/30 text-primary-foreground hover:border-accent hover:text-accent"
+                  >
+                    <Phone className="size-4" aria-hidden="true" /> Call Now
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -162,7 +166,7 @@ function HomePage() {
           <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
             <h2 className="font-display text-lg">Search properties</h2>
             <span className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-              Demo — filters the sample listings below
+              Filter the property examples below
             </span>
           </div>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-6">
@@ -261,7 +265,7 @@ function HomePage() {
       <section id="featured" className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="eyebrow">Sample listings</p>
+            <p className="eyebrow">Property showcase</p>
             <h2 className="mt-2 text-3xl sm:text-4xl">Featured Properties</h2>
           </div>
           <Link to="/properties" className="text-sm font-semibold text-accent hover:underline">
@@ -278,7 +282,7 @@ function HomePage() {
         </div>
         {visible.length === 0 && (
           <p className="mt-10 rounded-xl border border-border bg-card p-8 text-center text-sm text-muted-foreground">
-            No sample listings match this search. Try widening your filters, or{" "}
+            No property examples match this search. Try widening your filters, or{" "}
             <Link to="/contact" className="text-accent underline">
               tell us what you're looking for
             </Link>
@@ -290,9 +294,9 @@ function HomePage() {
       {/* WHY CHOOSE US */}
       <section className="border-y border-border bg-secondary/50">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
-          <p className="eyebrow">Why choose us</p>
+          <p className="eyebrow">A clearer property search</p>
           <h2 className="mt-2 max-w-xl text-3xl sm:text-4xl">
-            A calmer, clearer way to move in Karachi
+            From search to enquiry, without the clutter
           </h2>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {whyUs.map((w) => (
@@ -320,12 +324,14 @@ function HomePage() {
               <Link to="/contact" className="btn-base btn-accent">
                 Contact Us
               </Link>
-              <a
-                href={waLink("Hello, I'd like some help finding a property.")}
-                className="btn-base border border-primary-foreground/30 text-primary-foreground hover:border-accent hover:text-accent"
-              >
-                WhatsApp Us
-              </a>
+              {contactReady.whatsapp && (
+                <a
+                  href={waLink("Hello, I'd like some help finding a property.")}
+                  className="btn-base border border-primary-foreground/30 text-primary-foreground hover:border-accent hover:text-accent"
+                >
+                  WhatsApp Us
+                </a>
+              )}
             </div>
           </div>
         </div>

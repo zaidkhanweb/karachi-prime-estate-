@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
-import { business, telLink } from "@/config/business";
+import { business, contactReady, telLink } from "@/config/business";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -49,9 +49,15 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <a href={telLink} className="btn-base btn-primary hidden sm:inline-flex">
-            <Phone className="size-4" aria-hidden="true" /> Call Now
-          </a>
+          {contactReady.phone ? (
+            <a href={telLink} className="btn-base btn-primary hidden sm:inline-flex">
+              <Phone className="size-4" aria-hidden="true" /> Call Now
+            </a>
+          ) : (
+            <Link to="/contact" className="btn-base btn-primary hidden sm:inline-flex">
+              Contact Us
+            </Link>
+          )}
           <button
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -79,9 +85,15 @@ export function Header() {
                 {n.label}
               </Link>
             ))}
-            <a href={telLink} className="btn-base btn-primary my-4">
-              <Phone className="size-4" aria-hidden="true" /> Call Now
-            </a>
+            {contactReady.phone ? (
+              <a href={telLink} className="btn-base btn-primary my-4">
+                <Phone className="size-4" aria-hidden="true" /> Call Now
+              </a>
+            ) : (
+              <Link to="/contact" onClick={() => setOpen(false)} className="btn-base btn-primary my-4">
+                Contact Us
+              </Link>
+            )}
           </nav>
         </div>
       )}

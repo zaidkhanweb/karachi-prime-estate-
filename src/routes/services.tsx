@@ -7,7 +7,7 @@ import {
   Calculator,
   Building2,
 } from "lucide-react";
-import { waLink } from "@/config/business";
+import { contactReady, waLink } from "@/config/business";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -70,8 +70,8 @@ function ServicesPage() {
       <p className="eyebrow">What we do</p>
       <h1 className="mt-2 text-4xl sm:text-5xl">Services</h1>
       <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-        Practical, end-to-end support for people buying, selling, renting or investing in
-        Karachi property.
+        Property services for buying, selling, renting and investing across Karachi,
+        with a clear route from enquiry to the next step.
       </p>
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -86,12 +86,14 @@ function ServicesPage() {
               <Link to="/contact" className="btn-base btn-primary">
                 Contact Us
               </Link>
-              <a
-                href={waLink(`Hello, I'd like to know more about your ${s.title} service.`)}
-                className="btn-base btn-outline"
-              >
-                WhatsApp
-              </a>
+              {contactReady.whatsapp && (
+                <a
+                  href={waLink(`Hello, I'd like to know more about your ${s.title} service.`)}
+                  className="btn-base btn-outline"
+                >
+                  WhatsApp
+                </a>
+              )}
             </div>
           </div>
         ))}

@@ -45,7 +45,7 @@ export const properties: Property[] = [
     description:
       "Sample listing: a bright double-storey house with a landscaped front garden and covered car porch.",
     longDescription:
-      "This is a demonstration listing used to show how a property page looks. A double-storey family home laid out around a central lounge, with a landscaped front garden, covered porch and a separate guest area on the ground floor. Replace this text with the real property write-up once listings are supplied by the agency.",
+      "Example property profile: a double-storey family home arranged around a central lounge, with a landscaped front garden, covered porch and a separate guest area on the ground floor.",
     features: [
       "Double-storey layout",
       "Separate guest lounge",
@@ -77,7 +77,7 @@ export const properties: Property[] = [
     description:
       "Sample listing: high-floor apartment with full-height windows and an open sea outlook.",
     longDescription:
-      "A demonstration listing for a high-floor apartment in a managed building. Open-plan living and dining with full-height glazing, three bedrooms with attached baths, and building amenities including lifts and 24-hour security. Replace with verified details before publishing real listings.",
+      "Example property profile: a high-floor apartment in a managed building with open-plan living and dining, full-height glazing, three bedrooms with attached baths, lifts and 24-hour security.",
     features: [
       "High floor with open outlook",
       "Open-plan living and dining",
@@ -109,7 +109,7 @@ export const properties: Property[] = [
     description:
       "Sample listing: level corner plot on a paved residential street, suitable for a custom build.",
     longDescription:
-      "A demonstration plot listing. Level, walled and located on a paved residential street with utility connections available at the boundary. Use this page structure for real plot listings once documentation is verified.",
+      "Example property profile: a level, walled plot on a paved residential street with utility connections shown at the boundary.",
     features: [
       "Corner position",
       "Level and walled",
@@ -139,7 +139,7 @@ export const properties: Property[] = [
     description:
       "Sample listing: corner retail unit with a glass frontage on a busy commercial street.",
     longDescription:
-      "A demonstration commercial listing. Ground-floor corner unit with wide glass frontage, suitable for retail, a showroom or a customer-facing office. Mezzanine potential subject to approvals. Replace with verified commercial terms before use.",
+      "Example property profile: a ground-floor corner unit with wide glass frontage, suitable for retail, a showroom or a customer-facing office. Mezzanine potential would be subject to relevant approvals.",
     features: [
       "Corner unit",
       "Wide glass frontage",
@@ -170,7 +170,7 @@ export const properties: Property[] = [
     description:
       "Sample listing: compact, well-lit apartment in a low-rise building close to main routes.",
     longDescription:
-      "A demonstration listing for a compact apartment in a low-rise block. Practical layout with a combined living and dining area, two bedrooms and a fitted kitchen. Replace this description with verified property details.",
+      "Example property profile: a compact apartment in a low-rise block with a practical layout, combined living and dining area, two bedrooms and a fitted kitchen.",
     features: [
       "Fitted kitchen",
       "Combined living and dining",
@@ -200,7 +200,7 @@ export const properties: Property[] = [
     description:
       "Sample listing: family bungalow with a lawn, covered parking and a gated community setting.",
     longDescription:
-      "A demonstration listing for a bungalow inside a gated community. Front lawn, covered parking and a spacious first-floor family lounge. Community amenities include security, parks and commercial areas. Replace with verified details.",
+      "Example property profile: a bungalow inside a gated community with a front lawn, covered parking and a spacious first-floor family lounge. The example also highlights nearby security, parks and commercial areas.",
     features: [
       "Front lawn",
       "First-floor family lounge",
