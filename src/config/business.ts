@@ -10,6 +10,8 @@ export const business = {
   phone: "+923000000000",
   whatsapp: "923000000000",
   email: "hello@example.com",
+  // Add the client's Formspree endpoint during final setup, e.g. https://formspree.io/f/xxxxxxx
+  formspreeEndpoint: "",
   mapsEmbedUrl:
     "https://www.google.com/maps?q=4th%20Sunset%20St%2C%20D.H.A.%20Phase%204%2C%20Sunset%20Commercial%20Area%2C%20Karachi&output=embed",
   directionsUrl:
@@ -41,6 +43,7 @@ export const contactReady = {
   phone: Boolean(business.phone) && !business.phone.includes("000000000"),
   whatsapp: Boolean(business.whatsapp) && !business.whatsapp.includes("000000000"),
   email: Boolean(business.email) && !business.email.toLowerCase().endsWith("@example.com"),
+  formspree: Boolean(business.formspreeEndpoint) && business.formspreeEndpoint.startsWith("https://formspree.io/f/"),
   hours:
     business.hours.length > 0 &&
     business.hours.every((h) => !h.time.toLowerCase().includes("placeholder")),

@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { business, contactReady, waLink } from "@/config/business";
 
 interface Props {
   defaultProperty?: string;
@@ -10,19 +11,65 @@ export function InquiryForm({ defaultProperty = "", withDate = false }: Props) {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [validated, setValidated] = useState(false);
+  const [emailStatus, setEmailStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const set = (k: keyof typeof initialValues, v: string) =>
+  const set = (k: keyof typeof initialValues, v: string) => {
     setValues((current) => ({ ...current, [k]: v }));
+    setValidated(false);
+    setEmailStatus("idle");
+  };
 
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  const validate = () => {
     const next: Record<string, string> = {};
     if (!values.name.trim()) next.name = "Please enter your name.";
     if (!/^[\d\s+()-]{7,20}$/.test(values.phone.trim())) next.phone = "Please enter a valid phone number.";
     if (!values.property.trim()) next.property = "Please tell us which property.";
     if (!values.message.trim()) next.message = "Please add a short message.";
     setErrors(next);
-    setValidated(Object.keys(next).length === 0);
+    const ok = Object.keys(next).length === 0;
+    setValidated(ok);
+    return ok;
+  };
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    validate();
+  };
+
+  const whatsappMessage = [
+    "Hello, I'd like to make a property enquiry.",
+    `Name: ${values.name}`,
+    `Phone: ${values.phone}`,
+    `Property: ${values.property}`,
+    ...(withDate && values.date ? [`Preferred viewing date: ${values.date}`] : []),
+    `Message: ${values.message}`,
+  ].join("\n");
+
+  const sendWhatsApp = () => {
+    if (!validate() || !contactReady.whatsapp) return;
+    window.open(waLink(whatsappMessage), "_blank", "noopener,noreferrer");
+  };
+
+  const sendEmail = async () => {
+    if (!validate() || !contactReady.formspree) return;
+    setEmailStatus("sending");
+    try {
+      const response = await fetch(business.formspreeEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: values.name,
+          phone: values.phone,
+          property: values.property,
+          ...(withDate && values.date ? { preferredViewingDate: values.date } : {}),
+          message: values.message,
+        }),
+      });
+      if (!response.ok) throw new Error("Form submission failed");
+      setEmailStatus("sent");
+    } catch {
+      setEmailStatus("error");
+    }
   };
 
   return (
@@ -54,15 +101,28 @@ export function InquiryForm({ defaultProperty = "", withDate = false }: Props) {
         {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message}</p>}
       </div>
 
-      <button type="submit" className="btn-base btn-primary w-full">Review Enquiry</button>
+      {!validated ? (
+        <button type="submit" className="btn-base btn-primary w-full">Review Enquiry</button>
+      ) : (
+        <div className="grid gap-2 sm:grid-cols-2">
+          <button type="button" onClick={sendWhatsApp} disabled={!contactReady.whatsapp} className="btn-base btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50">
+            Send via WhatsApp
+          </button>
+          <button type="button" onClick={sendEmail} disabled={!contactReady.formspree || emailStatus === "sending"} className="btn-base btn-outline w-full disabled:cursor-not-allowed disabled:opacity-50">
+            {emailStatus === "sending" ? "Sending..." : "Send via Email"}
+          </button>
+        </div>
+      )}
 
-      {validated && (
+      {validated && (!contactReady.whatsapp || !contactReady.formspree) && (
         <p className="rounded-lg border border-accent/40 bg-accent/10 p-3 text-xs text-foreground">
-          Your enquiry details are complete. Online delivery will be enabled when the agency's enquiry service is connected.
+          Contact delivery will be enabled when the agency's verified WhatsApp number and email service are connected.
         </p>
       )}
+      {emailStatus === "sent" && <p className="text-xs text-foreground">Your enquiry was sent successfully by email.</p>}
+      {emailStatus === "error" && <p className="text-xs text-destructive">Email delivery failed. Please try again.</p>}
       <p className="text-[11px] text-muted-foreground">
-        Enquiry delivery is not active yet; no information is transmitted by this form.
+        Choose WhatsApp or email after reviewing your enquiry. No information is sent until you choose a delivery option.
       </p>
     </form>
   );
