@@ -21,7 +21,7 @@ export const Route = createFileRoute("/properties/")({
 function PropertiesPage() {
   const { properties, loading, error } = useProperties();
   const [filter, setFilter] = useState<FilterId>("all");
-  const visible = useMemo(() => properties.filter((p) => matchesFilter(p, filter)), [filter]);
+  const visible = useMemo(() => properties.filter((p) => matchesFilter(p, filter)), [properties, filter]);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">

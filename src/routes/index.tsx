@@ -101,7 +101,7 @@ function HomePage() {
       }
       return true;
     });
-  }, [filter, applied]);
+  }, [properties, filter, applied]);
 
   return (
     <>
