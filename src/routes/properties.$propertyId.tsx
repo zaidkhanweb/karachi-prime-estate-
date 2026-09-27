@@ -1,13 +1,16 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { BedDouble, Bath, Ruler, MapPin, Phone, MessageCircle, Check } from "lucide-react";
+import { fetchProperty, isSupabaseConfigured } from "@/lib/supabase-properties";
 import { getProperty } from "@/data/properties";
 import { contactReady, telLink, waLink } from "@/config/business";
 import { InquiryForm } from "@/components/site/InquiryForm";
 
 export const Route = createFileRoute("/properties/$propertyId")({
-  loader: ({ params }) => {
-    const property = getProperty(params.propertyId);
+  loader: async ({ params }) => {
+    const property = isSupabaseConfigured
+      ? await fetchProperty(params.propertyId)
+      : getProperty(params.propertyId);
     if (!property) throw notFound();
     return { property };
   },
@@ -112,9 +115,7 @@ function PropertyDetail() {
               <span className="rounded-full border border-border px-3 py-1 text-[11px] font-semibold">
                 {property.typeLabel}
               </span>
-              <span className="rounded-full border border-accent px-3 py-1 text-[11px] font-semibold text-accent">
-                Sample listing
-              </span>
+
             </div>
             <h1 className="mt-4 text-3xl sm:text-4xl">{property.title}</h1>
             <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">

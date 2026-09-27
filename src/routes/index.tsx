@@ -12,7 +12,8 @@ import {
   Users,
 } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
-import { properties, locations } from "@/data/properties";
+import { locations } from "@/data/properties";
+import { useProperties } from "@/hooks/use-properties";
 import { PropertyCard } from "@/components/site/PropertyCard";
 import {
   PropertyFilters,
@@ -76,6 +77,7 @@ const whyUs = [
 ];
 
 function HomePage() {
+  const { properties, loading, error } = useProperties();
   const [filter, setFilter] = useState<FilterId>("all");
   const [search, setSearch] = useState({
     purpose: "any",
@@ -275,12 +277,15 @@ function HomePage() {
 
         <PropertyFilters active={filter} onChange={setFilter} />
 
+        {loading && <p className="mt-8 text-sm text-muted-foreground">Loading properties…</p>}
+        {error && <p className="mt-8 text-sm text-destructive">Could not load live properties. Please try again.</p>}
+
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((p) => (
             <PropertyCard key={p.id} property={p} />
           ))}
         </div>
-        {visible.length === 0 && (
+        {!loading && !error && visible.length === 0 && (
           <p className="mt-10 rounded-xl border border-border bg-card p-8 text-center text-sm text-muted-foreground">
             No property examples match this search. Try widening your filters, or{" "}
             <Link to="/contact" className="text-accent underline">

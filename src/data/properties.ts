@@ -29,7 +29,7 @@ export interface Property {
 }
 
 // SAMPLE / DEMO data only — not real, currently available listings.
-export const properties: Property[] = [
+export const demoProperties: Property[] = [
   {
     id: "dha-phase-4-family-house",
     title: "4-Bedroom Family House",
@@ -218,7 +218,9 @@ export const properties: Property[] = [
   },
 ];
 
-export const getProperty = (id: string) => properties.find((p) => p.id === id);
+export const properties = demoProperties;
+
+export const getProperty = (id: string) => demoProperties.find((p) => p.id === id);
 
 export const locations = [
   "DHA Karachi",

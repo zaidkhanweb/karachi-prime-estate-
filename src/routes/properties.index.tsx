@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { properties } from "@/data/properties";
+import { useProperties } from "@/hooks/use-properties";
 import { PropertyCard } from "@/components/site/PropertyCard";
 import { PropertyFilters, matchesFilter, type FilterId } from "@/components/site/PropertyFilters";
 
@@ -19,6 +19,7 @@ export const Route = createFileRoute("/properties/")({
 });
 
 function PropertiesPage() {
+  const { properties, loading, error } = useProperties();
   const [filter, setFilter] = useState<FilterId>("all");
   const visible = useMemo(() => properties.filter((p) => matchesFilter(p, filter)), [filter]);
 
@@ -31,6 +32,9 @@ function PropertiesPage() {
       </p>
 
       <div className="mt-8"><PropertyFilters active={filter} onChange={setFilter} /></div>
+
+      {loading && <p className="mt-8 text-sm text-muted-foreground">Loading properties…</p>}
+      {error && <p className="mt-8 text-sm text-destructive">Could not load live properties. Please try again.</p>}
 
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((p) => <PropertyCard key={p.id} property={p} />)}
